@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Chat</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F0F2F5;
+            height: 100%;
+            color: #333;
+        }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .logo {
+        position: absolute;
+        top: 15px;
+        left: 20px;
+    }
+
+    .logo img {
+        width: 120px;
+        height: auto;
+    }
+
+    .icons {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .icons img {
+        width: 30px;
+        margin-left: 15px;
+        transition: transform 0.2s;
+    }
+
+    .icons img:hover {
+        transform: scale(1.2);
+    }
+
+    .profile-icon {
+        position: relative;
+    }
+
+    .dropdown-menu {
+        display: none; /* Initially hide the dropdown */
+        position: absolute; /* Position the dropdown relative to the parent */
+        top: 100%; /* Align it below the icon */
+        right: 0; /* Align to the right of the parent */
+        background-color: #313CA1; /* Background color for the dropdown */
+        border: 1px solid white; /* Border around the dropdown */
+        border-radius: 5px; /* Rounded corners */
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        z-index: 1000; /* Ensure the dropdown is above other elements */
+        min-width: 150px; /* Minimum width for the dropdown */
+    }
+
+    .dropdown-menu a {
+        display: block; 
+        padding: 10px;
+        color: white; 
+        text-decoration: none; 
+        white-space: nowrap; 
+        text-align: center;
+    }
+
+    .dropdown-menu a:hover {
+        text-decoration: underline;
+    }
+
+    .profile-icon:hover .dropdown-menu {
+        display: block;
+    }
+
+    header {
+        background-color: #313CA1;
+        color: #fff;
+        padding: 1.5rem 4rem;
+        height: 25px;
+        text-align: right;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+
+.main-container {
+    display: flex;
+    background-color: #E6E6E6;
+    margin-left: 450px;
+    border: 1px solid black;
+    width: 65%;
+    max-width: 1100px;
+    flex-grow: 1;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 15%;
+    background-color: #E6E6E6;
+    padding: 10px;
+    overflow-y: auto;
+    border-radius: 20px 0 0 20px;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+    margin-top: 70px;
+    color: #000;
+}
+
+.contact img.profile-pic {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.contents {
+    width: 80%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    overflow: hidden;
+    flex-grow: 1;
+    border: 1px solid black;
+    width: 800px;
+}
+
+.chat-box {
+    padding: 10px;
+    height: 100%;
+    overflow-y: auto;
+    background-color: #313CA1;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message {
+    background-color: #fff;
+    color: #000;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: fit-content;
+    max-width: 80%;
+    align-self: flex-start;
+}
+
+.chat-message.sent {
+    background-color: #007bff; 
+    color: #fff;
+    align-self: flex-end;
+}
+
+.chat-message.received {
+    background-color: #f1f1f1;
+    color: #000;
+    align-self: flex-start; 
+}
+
+.chat-message img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.chat-message a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.chat-message a:hover {
+    text-decoration: underline;
+}
+
+.chat-input {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.chat-input button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #0056b3;
+}
+
+.footer {
+        width: 100%;
+        text-align: center;
+        color: red;
+        background-color: #313CA1;
+        padding: 10px 0;
+    }
+
+</style>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="./Images/job-swiper-high-resolution-logo-transparent .png" alt="JobSwipe Logo">
+            </div>
+            <div class="icons">
+                <a href="Seekers-dashboard.html"><img src="./Images/home.png" alt="Home Icon"></a>
+                <a href="Seekers-Messages.html"><img src="./Images/message.png" alt="Message Icon"></a>
+                <a href="notifications.html"><img src="./Images/notification.png" alt="Notification Icon"></a>
+                <div class="profile-icon">
+                    <a href="profile.html"><img src="./Images/profile.png" alt="Profile Icon"></a>
+                    <div class="dropdown-menu">
+                        <a href="./Job Seeker profile page.html">View Profile</a>
+                        <a href="companyReviews.html">Company Review</a>
+                        <a href="./welcome.html">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="contact">
+                <img src="./Images/Test Account (1).png" alt="HCLTech" class="profile-pic">
+                <span>HCLTech</span>
+            </div>
+        </div>
+        <div class="contents">
+            <div class="chat-container">
+                <div class="chat-box" id="chat-box">
+                    <!-- Messages will be dynamically inserted here -->
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="message-input" placeholder="Type your message...">
+                    <button onclick="sendMessage()">Send</button>
+                    <button onclick="document.getElementById('file-input').click()">Attach File</button>
+                    <input type="file" id="file-input" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        2024 JobSwipers. All rights reserved.
+    </div>
+    </div>
+    <script>
+        const ws = new WebSocket('ws://localhost:8080');
+    
+        ws.onopen = () => {
+            console.log('Connected to server');
+        };
+    
+        ws.onmessage = (event) => {
+            const chatBox = document.getElementById('chat-box');
+            const messageData = JSON.parse(event.data);
+    
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('chat-message');
+    
+            if (messageData.sender === 'Me') {
+                messageElement.classList.add('sent');
+            } else {
+                messageElement.classList.add('received');
+            }
+    
+            if (messageData.type === 'text') {
+                messageElement.innerHTML = `<p><strong>${messageData.sender}:</strong> ${messageData.content}</p>`;
+            } else if (messageData.type === 'file') {
+                messageElement.innerHTML = `<p><strong>${messageData.sender}:</strong> <a href="${messageData.content}" download="${messageData.filename}">${messageData.filename}</a></p>`;
+            } else if (messageData.type === 'image') {
+                messageElement.innerHTML = `<p><strong>${messageData.sender}:</strong><br><img src="${messageData.content}" alt="${messageData.filename}"></p>`;
+            }
+    
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        };
+    
+        function sendMessage() {
+            const messageInput = document.getElementById('message-input');
+            const messageContent = messageInput.value.trim();
+            if (messageContent) {
+                const messageData = {
+                    type: 'text',
+                    sender: 'Me',
+                    content: messageContent
+                };
+                ws.send(JSON.stringify(messageData));
+    
+                const chatBox = document.getElementById('chat-box');
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('chat-message', 'sent'); // Ensure 'sent' class is added
+                messageElement.innerHTML = `<p><strong>Me:</strong> ${messageContent}</p>`;
+                chatBox.appendChild(messageElement);
+                chatBox.scrollTop = chatBox.scrollHeight;
+                messageInput.value = '';
+            }
+        }
+    
+        document.getElementById('file-input').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const fileURL = e.target.result;
+                    const fileName = file.name;
+                    const fileType = file.type.split('/')[0]; // 'image', 'video', etc.
+                    const messageType = fileType === 'image' ? 'image' : 'file';
+    
+                    const messageData = {
+                        type: messageType,
+                        sender: 'Me',
+                        filename: fileName,
+                        content: fileURL
+                    };
+                    ws.send(JSON.stringify(messageData));
+    
+                    const chatBox = document.getElementById('chat-box');
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('chat-message', 'sent'); // Ensure 'sent' class is added
+                    if (messageType === 'image') {
+                        messageElement.innerHTML = `<p><strong>Me:</strong><br><img src="${fileURL}" alt="${fileName}"></p>`;
+                    } else {
+                        messageElement.innerHTML = `<p><strong>Me:</strong> <a href="${fileURL}" download="${fileName}">${fileName}</a></p>`;
+                    }
+                    chatBox.appendChild(messageElement);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    
+        // Dummy data
+        function populateChat() {
+            const chatBox = document.getElementById('chat-box');
+            const dummyMessages = [
+                { type: 'text', sender: 'John', content: 'Hello there!' },
+                { type: 'text', sender: 'John', content: 'I hope you doing good, I saw your profile. I’m interested to connect with you. Please find the attached document to know more about the company.' },
+                { type: 'file', sender: 'John', filename: 'document.pdf', content: 'https://example.com/document.pdf' },
+                { type: 'image', sender: 'John', filename: 'photo.jpg', content: 'https://d3jmn01ri1fzgl.cloudfront.net/photoadking/webp_thumbnail/corporate-business-poster-template-2gt9r652fb190e.webp' }
+            ];
+    
+            dummyMessages.forEach(messageData => {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('chat-message');
+    
+                if (messageData.sender === 'Me') {
+                    messageElement.classList.add('sent');
+                } else {
+                    messageElement.classList.add('received');
+                }
+    
+                if (messageData.type === 'text') {
+                    messageElement.innerHTML = `<p><strong>${messageData.sender}:</strong> ${messageData.content}</p>`;
+                } else if (messageData.type === 'file') {
+                    messageElement.innerHTML = `<p><strong>${messageData.sender}:</strong> <a href="${messageData.content}" download="${messageData.filename}">${messageData.filename}</a></p>`;
+                } else if (messageData.type === 'image') {
+                    messageElement.innerHTML = `<p><strong>${messageData.sender}:</strong><br><img src="${messageData.content}" alt="${messageData.filename}"></p>`;
+                }
+    
+                chatBox.appendChild(messageElement);
+            });
+    
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    
+        // Populate chat with dummy data on page load
+        window.onload = populateChat;
+    </script>    
+</body>
+</html>

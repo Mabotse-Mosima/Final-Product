@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Seeker Dashboard</title>
+    <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F0F2F5;
+            height: 100%;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .logo {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+        }
+
+        .logo img {
+            width: 120px;
+            height: auto;
+        }
+
+        .icons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .icons img {
+            width: 30px;
+            margin-left: 15px;
+            transition: transform 0.2s;
+        }
+
+        .icons img:hover {
+            transform: scale(1.2);
+        }
+
+        .profile-icon {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            display: none; /* Initially hide the dropdown */
+            position: absolute; /* Position the dropdown relative to the parent */
+            top: 100%; /* Align it below the icon */
+            right: 0; /* Align to the right of the parent */
+            background-color: #313CA1; /* Background color for the dropdown */
+            border: 1px solid white; /* Border around the dropdown */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+            z-index: 1000; /* Ensure the dropdown is above other elements */
+            min-width: 150px; /* Minimum width for the dropdown */
+        }
+
+        .dropdown-menu a {
+            display: block; 
+            padding: 10px;
+            color: white; 
+            text-decoration: none; 
+            white-space: nowrap; 
+            text-align: center;
+        }
+
+        .dropdown-menu a:hover {
+            text-decoration: underline;
+        }
+
+        .profile-icon:hover .dropdown-menu {
+            display: block;
+        }
+
+        header {
+            background-color: #313CA1;
+            color: #fff;
+            padding: 1.5rem 4rem;
+            height: 25px;
+            text-align: right;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background-color: #FFF;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            background-color: #FFF;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-message {
+            margin-bottom: 30px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .welcome-message h1 {
+            font-size: 2.5rem;
+            color: #313CA1;
+            margin-bottom: 15px;
+        }
+
+        .welcome-message p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .job-cards-container {
+            width: 100%;
+            align-items: center;
+            margin-left: 110px;
+        }
+
+        .job-card {
+            background-color: #FFF;
+            border: 1px solid #d0cece;
+            border-radius: 10px;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            margin-left: 30px;
+            color: #333;
+            box-shadow: 12px 12px 6px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .job-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .company-logo img {
+            max-width: 60px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .job-details {
+            flex: 1;
+        }
+
+        .job-card h2, .job-card h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #313CA1;
+        }
+
+        .job-card p {
+            margin: 5px 0;
+        }
+
+.job-actions {
+    margin-top: 20px;
+}
+
+.job-actions a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    background-color: #313CA1;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.job-actions a:hover {
+    background-color: #0A22FF;
+}
+
+.review-button {
+    background-color: #4CAF50; /* Green for review */
+}
+
+.review-button:hover {
+    background-color: #45A049;
+}
+
+.message-button {
+    background-color: #313CA1; /* Blue for messaging */
+}
+
+.message-button:hover {
+    background-color: #0A22FF;
+}
+
+.footer {
+        width: 100%;
+        text-align: center;
+        color: red;
+        background-color: #313CA1;
+        padding: 10px 0;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="./Images/job-swiper-high-resolution-logo-transparent .png" alt="JobSwipe Logo">
+            </div>
+            <div class="icons">
+                <a href="Seekers-dashboard.html"><img src="./Images/home.png" alt="Home Icon"></a>
+                <a href="Seekers-Messages.html"><img src="./Images/message.png" alt="Message Icon"></a>
+                <a href="notifications.html"><img src="./Images/notification.png" alt="Notification Icon"></a>
+                <div class="profile-icon">
+                    <a href="profile.html"><img src="./Images/profile.png" alt="Profile Icon"></a>
+                    <div class="dropdown-menu">
+                        <a href="./Job Seeker profile page.html">View Profile</a>
+                        <a href="companyReviews.html">Company Review</a>
+                        <a href="./welcome.html">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="content-wrapper">
+                <div class="welcome-message">
+                    <h1>Welcome to JobSwipers!</h1>
+                    <p>Explore exciting job opportunities tailored just for you. Swipe right to show interest, or left to pass. Your perfect career match is just a swipe away!</p>
+                </div>
+                <div id="job-cards-container" class="job-cards-container">
+                    <!-- Job Card -->
+                    <div class="job-card">
+                        <div class="company-logo">
+                            <img src="./Images/company-logo.png" alt="Company Logo">
+                        </div>
+                        <div class="job-details">
+                            <h2>Software Developer</h2>
+                            <h3>XYZ Tech Solutions</h3>
+                            <p>Location: San Francisco, CA</p>
+                            <p>Salary: $90,000 - $120,000</p>
+                            <p>Description: We are looking for a skilled software developer to join our team and help build cutting-edge solutions.</p>
+                            <div class="job-actions">
+                                <a href="companyReviews.html" class="review-button">Review Company</a>
+                                <a href="Seekers-Messages.html" class="message-button">Message Company</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Next Job Card -->
+                    <div class="job-card" style="display: none;">
+                        <div class="company-logo">
+                            <img src="./Images/company-logo.png" alt="Company Logo">
+                        </div>
+                        <div class="job-details">
+                            <h2>Web Designer</h2>
+                            <h3>ABC Design Studio</h3>
+                            <p>Location: Remote</p>
+                            <p>Salary: $70,000 - $90,000</p>
+                            <p>Description: Seeking a creative web designer to collaborate on various design projects for our clients.</p>
+                            <div class="job-actions">
+                                <a href="companyReviews.html" class="review-button">Review Company</a>
+                                <a href="Seekers-Messages.html" class="message-button">Message Company</a>
+                            </div>
+                        </div>  
+                    </div>                  
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer">
+                2024 JobSwipers. All rights reserved.
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        var jobCards = document.getElementsByClassName('job-card');
+        var currentIndex = 0;
+
+        function showCard(index) {
+            for (var i = 0; i < jobCards.length; i++) {
+                jobCards[i].style.display = (i === index) ? 'block' : 'none';
+            }
+        }
+
+        function sendInterestNotification(isInterested) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "job_interest.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    var status = xhr.status;
+                    if (status === 0 || (status >= 200 && status < 400)) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.status === 'success') {
+                            alert('Interest recorded successfully!');
+                        } else {
+                            alert('Failed to record interest: ' + response.message);
+                        }
+                    } else {
+                        alert('Failed to record interest.');
+                    }
+                }
+            };
+            xhr.send("jobIndex=" + currentIndex + "&isInterested=" + isInterested);
+        }
+
+        function setupSwipeEvents() {
+            for (var i = 0; i < jobCards.length; i++) {
+                var hammer = new Hammer(jobCards[i]);
+                hammer.on('swipeleft', function() {
+                    jobCards[currentIndex].style.transform = 'translateX(-100%)';
+                    setTimeout(function() {
+                        jobCards[currentIndex].style.transform = '';
+                        alert('You showed no interest in the job.');
+                        sendInterestNotification(false);
+                        currentIndex++;
+                        if (currentIndex < jobCards.length) {
+                            showCard(currentIndex);
+                        }
+                    }, 500);
+                });
+
+                hammer.on('swiperight', function() {
+                    jobCards[currentIndex].style.transform = 'translateX(100%)';
+                    setTimeout(function() {
+                        jobCards[currentIndex].style.transform = '';
+                        alert('You showed interest in the job.');
+                        sendInterestNotification(true);
+                        currentIndex++;
+                        if (currentIndex < jobCards.length) {
+                            showCard(currentIndex);
+                        }
+                    }, 500);
+                });
+            }
+        }
+
+        // Initialize the first card visibility
+        showCard(currentIndex);
+        setupSwipeEvents();
+    </script>
+</body>
+</html>

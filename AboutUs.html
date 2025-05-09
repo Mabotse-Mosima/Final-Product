@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Job Swiper</title>
+    <link rel="stylesheet" href="./globall.css" />
+    <link rel="stylesheet" href="./WelcomePage.css" />
+</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #313CA1;
+}
+
+.welcome-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+.about-us-section {
+    background-color: #313CA1;
+    padding: 40px 20px;
+    color: black;
+    margin: 0 auto;
+    border-radius: 10px;
+    max-width: 900px;
+}
+
+.about-us-section h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+    color: black;
+}
+
+.text-content {
+    flex: 2;
+    padding-right: 20px;
+}
+
+.text-content p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.image-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-content img {
+    max-width: 100px;
+}
+
+footer {
+    background-color: rgb(195, 194, 194);
+    color: red;
+    padding: 10px;
+    text-align: center;
+    margin-top: -20px;
+}
+
+</style>
+<body>
+    <header class="frame-header">
+        <div class="job-swiper-high-resolution-log-container">
+          <img
+            class="job-swiper-high-resolution-log-icon1"
+            loading="lazy"
+            alt=""
+            src="./Images/job-swiper-high-resolution-logo-transparent .png"
+          />
+        </div>
+        <div class="frame-div">
+          <div class="frame-parent1">
+            <div class="home-wrapper">
+                <a href="welcome.html" class="home">Home</a>
+              </div>
+              <div class="about-us-wrapper">
+                <a href="AboutUs.html" class="about-us">About us</a>
+              </div>
+              <div class="contact-us-wrapper">
+                <a href="Contact.html" class="contact-us">Contact us</a>
+              </div>
+              
+              <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn">LogIn</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="Login&SignUp-Recruiter.html">Recruiter</a>
+                    <a href="Login&SignUP-Seeker.html">Job Seeker</a>
+                </div>
+            </div>
+
+          </div>
+          <i class="welcome-to-job">ABOUT US</i>
+        </div>
+      </header>
+    <main>
+        <section class="about-us-section">
+            <div class="content-container">
+                <div class="text-content">
+                    <p>Welcome to Job Swiper, your ultimate career matchmaker. In today’s fast-paced world, finding the perfect job or the ideal candidate can be overwhelming. That’s where we come in. Job Swiper is designed to simplify the job search and recruitment process by bringing innovative, user-friendly solutions right to your fingertips.
+
+                        Whether you're a job seeker looking for your dream role or a recruiter searching for top talent, Job Swiper offers a seamless experience that connects opportunities with potential. With just a swipe, you can explore, match, and engage with jobs or candidates that fit your criteria. Our platform is built on the principles of efficiency, convenience, and personalization, ensuring that you find what you're looking for quickly and effortlessly.
+                        
+                        At Job Swiper, we believe in transforming the job market by making it more accessible, engaging, and tailored to your needs. Join us on this journey to redefine how job hunting and recruiting are done.
+                        
+                        </p>
+                </div>
+                <div class="image-content">
+                    <img src="./Images/phone.jpg" alt="Job Swiper App on Phone">
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 JobSwipers. All rights reserved</p>
+    </footer>
+    <script src="script.js"></script>
+
+</body>
+</html>
